@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#000d00" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>La Aplicación de Javi</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--green:#00ff41;--green-dim:#00c832;--green-dark:#007a1f;--green-glow:rgba(0,255,65,.4);--bg:#000d00;--border:#00ff4133}
+    body{background:var(--bg);color:var(--green);font-family:'Share Tech Mono',monospace;min-height:100vh;overflow-x:hidden;position:relative}
+    body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,65,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,65,.03) 1px,transparent 1px);background-size:40px 40px;animation:gridMove 20s linear infinite;pointer-events:none;z-index:0}
+    body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.15) 2px,rgba(0,0,0,.15) 4px);pointer-events:none;z-index:1}
+    @keyframes gridMove{100%{transform:translateY(40px)}}
+    .container{position:relative;z-index:2;max-width:480px;margin:0 auto;padding:20px 16px 30px;display:flex;flex-direction:column;align-items:center;gap:18px}
+    header{width:100%;text-align:center;padding:14px 10px 10px;border-bottom:1px solid var(--border)}
+    header::before{content:'[ SISTEMA ACTIVO ]';display:block;font-size:10px;color:var(--green-dark);letter-spacing:4px;margin-bottom:8px}
+    h1{font-family:'Orbitron',sans-serif;font-size:clamp(17px,5vw,25px);font-weight:900;text-transform:uppercase;letter-spacing:3px;text-shadow:0 0 10px var(--green),0 0 30px var(--green-glow);animation:flicker 8s infinite}
+    .subtitle{font-size:10px;color:var(--green-dark);letter-spacing:5px;margin-top:5px}
+    @keyframes flicker{0%,95%,97%,100%{opacity:1}96%{opacity:.7}}
+    .clock-panel{width:100%;background:linear-gradient(135deg,#000f00,#001500);border:1px solid var(--green-dark);border-radius:12px;padding:20px;text-align:center;position:relative;overflow:hidden;box-shadow:0 0 20px rgba(0,255,65,.1),inset 0 0 30px rgba(0,255,65,.03)}
+    .clock-label{font-size:10px;letter-spacing:4px;color:var(--green-dark);margin-bottom:8px}
+    .time{font-family:'Orbitron',sans-serif;font-size:clamp(46px,14vw,70px);font-weight:900;color:var(--green);text-shadow:0 0 15px var(--green),0 0 40px var(--green-glow);letter-spacing:4px;line-height:1}
+    .colon{animation:blink 1s step-end infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+    .date-display{font-family:'Orbitron',sans-serif;font-size:clamp(11px,3vw,15px);color:var(--green-dim);margin-top:10px;letter-spacing:2px}
+    .festivo-badge{display:none;margin-top:12px;padding:6px 18px;background:rgba(0,255,65,.12);border:1px solid var(--green);border-radius:20px;font-size:11px;letter-spacing:2px;text-shadow:0 0 10px var(--green);animation:pulse 2s ease-in-out infinite}
+    .festivo-badge.show{display:inline-block}
+    @keyframes pulse{0%,100%{box-shadow:0 0 5px var(--green-glow)}50%{box-shadow:0 0 20px var(--green-glow)}}
+    .buttons-grid{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .btn{background:linear-gradient(135deg,#000f00,#001a00);border:1px solid var(--green-dark);border-radius:10px;color:var(--green);font-family:'Orbitron',sans-serif;font-size:clamp(8px,2.4vw,11px);font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:18px 8px;cursor:pointer;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:all .2s;position:relative;overflow:hidden;text-align:center;min-height:105px;box-shadow:0 0 10px rgba(0,255,65,.05);-webkit-tap-highlight-color:transparent}
+    .btn:hover,.btn:active{border-color:var(--green);box-shadow:0 0 20px rgba(0,255,65,.3),inset 0 0 20px rgba(0,255,65,.05);transform:translateY(-2px)}
+    .btn:active{transform:scale(.97)}
+    .btn-icon{font-size:26px;filter:drop-shadow(0 0 6px var(--green))}
+    .btn-text{line-height:1.35;text-shadow:0 0 8px var(--green-glow)}
+    .data-strip{width:100%;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:4px 0;background:rgba(0,255,65,.02)}
+    .data-strip-inner{display:flex;gap:40px;animation:scroll 30s linear infinite;white-space:nowrap;font-size:10px;color:var(--green-dark);letter-spacing:2px}
+    @keyframes scroll{from{transform:translateX(100vw)}to{transform:translateX(-200%)}}
+    footer{font-size:10px;color:var(--green-dark);letter-spacing:3px;text-align:center;border-top:1px solid var(--border);padding-top:12px;width:100%}
+    .corner{position:fixed;width:28px;height:28px;z-index:3}
+    .tl{top:8px;left:8px;border-top:2px solid var(--green-dark);border-left:2px solid var(--green-dark)}
+    .tr{top:8px;right:8px;border-top:2px solid var(--green-dark);border-right:2px solid var(--green-dark)}
+    .bl{bottom:8px;left:8px;border-bottom:2px solid var(--green-dark);border-left:2px solid var(--green-dark)}
+    .br{bottom:8px;right:8px;border-bottom:2px solid var(--green-dark);border-right:2px solid var(--green-dark)}
+  </style>
+</head>
+<body>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="container">
+  <header>
+    <h1>La Aplicación de Javi</h1>
+    <div class="subtitle">LLANES · ASTURIAS · ESPAÑA</div>
+  </header>
+  <div class="data-strip">
+    <div class="data-strip-inner">SYS_OK &nbsp;|&nbsp; CONEXIÓN ACTIVA &nbsp;|&nbsp; ZONA: EUROPE/MADRID &nbsp;|&nbsp; LLANES — ASTURIAS &nbsp;|&nbsp; VER 2.0 &nbsp;|&nbsp; SYS_OK &nbsp;|&nbsp; CONEXIÓN ACTIVA &nbsp;|&nbsp; ZONA: EUROPE/MADRID &nbsp;|&nbsp; LLANES — ASTURIAS &nbsp;|&nbsp; VER 2.0</div>
+  </div>
+  <div class="clock-panel">
+    <div class="clock-label">// HORA LOCAL — ESPAÑA //</div>
+    <div class="time"><span id="hh">00</span><span class="colon">:</span><span id="mm">00</span><span class="colon">:</span><span id="ss">00</span></div>
+    <div class="date-display" id="dateDisplay">—</div>
+    <div class="festivo-badge" id="festivoBadge">⚡ FESTIVO ⚡</div>
+  </div>
+  <div class="buttons-grid">
+    <a class="btn" href="https://javi1899.github.io/limpiezapueblos/" target="_blank" rel="noopener">
+      <span class="btn-icon">🧹</span><span class="btn-text">LIMPIEZA<br>DE PUEBLOS</span>
+    </a>
+    <a class="btn" href="https://javi1899.github.io/climallanes/" target="_blank" rel="noopener">
+      <span class="btn-icon">🌤️</span><span class="btn-text">EL TIEMPO<br>EN LLANES</span>
+    </a>
+    <a class="btn" href="https://javi1899.github.io/mareasllanes/" target="_blank" rel="noopener">
+      <span class="btn-icon">🌊</span><span class="btn-text">TABLA DE<br>MAREAS</span>
+    </a>
+    <a class="btn" href="https://javi1899.github.io/ofertasllanes/" target="_blank" rel="noopener">
+      <span class="btn-icon">💼</span><span class="btn-text">OFERTAS<br>DE EMPLEO</span>
+    </a>
+  </div>
+  <footer>&lt; SISTEMA OPERATIVO — LLANES &gt;<br><span id="footerDate"></span></footer>
+</div>
+<script>
+  // ── Festivos España + Asturias ──
+  const FEST_FIJOS = {
+    "01-01":"Año Nuevo","01-06":"Reyes Magos","05-01":"Día del Trabajo",
+    "08-15":"Asunción de la Virgen","09-08":"Día de Asturias","10-12":"Fiesta Nacional",
+    "11-01":"Todos los Santos","12-06":"Día de la Constitución",
+    "12-08":"Inmaculada Concepción","12-25":"Navidad"
+  };
+  function easter(y){
+    const a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,
+      f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,
+      i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),
+      mo=Math.floor((h+l-7*m+114)/31),da=((h+l-7*m+114)%31)+1;
+    return new Date(y,mo-1,da);
+  }
+  function getDynamic(y){
+    const e=easter(y),fmt=d=>`${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const jv=new Date(e);jv.setDate(e.getDate()-3);
+    const vi=new Date(e);vi.setDate(e.getDate()-2);
+    return {[fmt(jv)]:"Jueves Santo",[fmt(vi)]:"Viernes Santo"};
+  }
+  function isFestivo(d){
+    const k=`${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    return FEST_FIJOS[k]||getDynamic(d.getFullYear())[k]||null;
+  }
+  const DIAS=['DOMINGO','LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO'];
+  const MESES=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+  function update(){
+    const now=new Date(new Date().toLocaleString('en-US',{timeZone:'Europe/Madrid'}));
+    document.getElementById('hh').textContent=String(now.getHours()).padStart(2,'0');
+    document.getElementById('mm').textContent=String(now.getMinutes()).padStart(2,'0');
+    document.getElementById('ss').textContent=String(now.getSeconds()).padStart(2,'0');
+    const d=String(now.getDate()).padStart(2,'0'),mes=MESES[now.getMonth()],y=now.getFullYear();
+    document.getElementById('dateDisplay').textContent=`${DIAS[now.getDay()]}  ${d} ${mes} ${y}`;
+    document.getElementById('footerDate').textContent=`${d}·${mes}·${y}`;
+    const fest=isFestivo(now),badge=document.getElementById('festivoBadge');
+    if(fest){badge.textContent=`⚡ HOY ES FESTIVO: ${fest.toUpperCase()} ⚡`;badge.classList.add('show');}
+    else{badge.classList.remove('show');}
+  }
+  update();setInterval(update,1000);
+</script>
+</body>
+</html>
