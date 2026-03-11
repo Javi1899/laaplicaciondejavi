@@ -15,12 +15,28 @@
     body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,65,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,65,.03) 1px,transparent 1px);background-size:40px 40px;animation:gridMove 20s linear infinite;pointer-events:none;z-index:0}
     body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.15) 2px,rgba(0,0,0,.15) 4px);pointer-events:none;z-index:1}
     @keyframes gridMove{100%{transform:translateY(40px)}}
-    .container{position:relative;z-index:2;max-width:480px;margin:0 auto;padding:20px 16px 30px;display:flex;flex-direction:column;align-items:center;gap:18px}
+    .container{position:relative;z-index:2;max-width:480px;margin:0 auto;padding:20px 16px 30px;display:flex;flex-direction:column;align-items:center;gap:16px}
     header{width:100%;text-align:center;padding:14px 10px 10px;border-bottom:1px solid var(--border)}
     header::before{content:'[ SISTEMA ACTIVO ]';display:block;font-size:10px;color:var(--green-dark);letter-spacing:4px;margin-bottom:8px}
     h1{font-family:'Orbitron',sans-serif;font-size:clamp(17px,5vw,25px);font-weight:900;text-transform:uppercase;letter-spacing:3px;text-shadow:0 0 10px var(--green),0 0 30px var(--green-glow);animation:flicker 8s infinite}
     .subtitle{font-size:10px;color:var(--green-dark);letter-spacing:5px;margin-top:5px}
     @keyframes flicker{0%,95%,97%,100%{opacity:1}96%{opacity:.7}}
+
+    /* ── LED PANEL ── */
+    .led-panel{width:100%;background:#020a02;border:2px solid #005500;border-radius:10px;overflow:hidden;position:relative;box-shadow:0 0 18px rgba(0,255,65,.2),inset 0 0 25px rgba(0,0,0,.9)}
+    .led-header{font-family:'Orbitron',sans-serif;font-size:9px;color:var(--green-dark);letter-spacing:3px;padding:5px 12px 0;text-align:left}
+    .led-track-wrap{overflow:hidden;padding:8px 0 10px}
+    .led-track{display:inline-flex;animation:ledScroll 22s linear infinite;white-space:nowrap}
+    .led-track:hover{animation-play-state:paused}
+    @keyframes ledScroll{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+    .led-text{font-family:'Orbitron',sans-serif;font-size:clamp(13px,3.8vw,16px);font-weight:700;color:#ffe000;text-shadow:0 0 8px #ffe000,0 0 22px rgba(255,224,0,.6),0 0 40px rgba(255,200,0,.3);letter-spacing:3px;padding:0 80px}
+    .led-dots{display:inline-flex;gap:6px;align-items:center;padding:0 20px}
+    .led-dot{width:5px;height:5px;border-radius:50%;background:#ffe000;box-shadow:0 0 6px #ffe000;opacity:.6}
+
+    /* ── SECTION LABEL ── */
+    .section-label{width:100%;font-size:9px;color:var(--green-dark);letter-spacing:4px;text-align:center;padding:2px 0}
+
+    /* ── CLOCK ── */
     .clock-panel{width:100%;background:linear-gradient(135deg,#000f00,#001500);border:1px solid var(--green-dark);border-radius:12px;padding:20px;text-align:center;position:relative;overflow:hidden;box-shadow:0 0 20px rgba(0,255,65,.1),inset 0 0 30px rgba(0,255,65,.03)}
     .clock-label{font-size:10px;letter-spacing:4px;color:var(--green-dark);margin-bottom:8px}
     .time{font-family:'Orbitron',sans-serif;font-size:clamp(46px,14vw,70px);font-weight:900;color:var(--green);text-shadow:0 0 15px var(--green),0 0 40px var(--green-glow);letter-spacing:4px;line-height:1}
@@ -30,40 +46,89 @@
     .festivo-badge{display:none;margin-top:12px;padding:6px 18px;background:rgba(0,255,65,.12);border:1px solid var(--green);border-radius:20px;font-size:11px;letter-spacing:2px;text-shadow:0 0 10px var(--green);animation:pulse 2s ease-in-out infinite}
     .festivo-badge.show{display:inline-block}
     @keyframes pulse{0%,100%{box-shadow:0 0 5px var(--green-glow)}50%{box-shadow:0 0 20px var(--green-glow)}}
+
+    /* ── BUTTONS ── */
     .buttons-grid{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .btn{background:linear-gradient(135deg,#000f00,#001a00);border:1px solid var(--green-dark);border-radius:10px;color:var(--green);font-family:'Orbitron',sans-serif;font-size:clamp(8px,2.4vw,11px);font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:18px 8px;cursor:pointer;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:all .2s;position:relative;overflow:hidden;text-align:center;min-height:105px;box-shadow:0 0 10px rgba(0,255,65,.05);-webkit-tap-highlight-color:transparent}
+    .btn{background:linear-gradient(135deg,#000f00,#001a00);border:1px solid var(--green-dark);border-radius:10px;color:var(--green);font-family:'Orbitron',sans-serif;font-size:clamp(8px,2.4vw,11px);font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:18px 8px;cursor:pointer;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:all .2s;text-align:center;min-height:100px;box-shadow:0 0 10px rgba(0,255,65,.05);-webkit-tap-highlight-color:transparent}
     .btn:hover,.btn:active{border-color:var(--green);box-shadow:0 0 20px rgba(0,255,65,.3),inset 0 0 20px rgba(0,255,65,.05);transform:translateY(-2px)}
     .btn:active{transform:scale(.97)}
     .btn-icon{font-size:26px;filter:drop-shadow(0 0 6px var(--green))}
     .btn-text{line-height:1.35;text-shadow:0 0 8px var(--green-glow)}
+
+    /* ── DATA STRIP ── */
     .data-strip{width:100%;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:4px 0;background:rgba(0,255,65,.02)}
     .data-strip-inner{display:flex;gap:40px;animation:scroll 30s linear infinite;white-space:nowrap;font-size:10px;color:var(--green-dark);letter-spacing:2px}
     @keyframes scroll{from{transform:translateX(100vw)}to{transform:translateX(-200%)}}
+
     footer{font-size:10px;color:var(--green-dark);letter-spacing:3px;text-align:center;border-top:1px solid var(--border);padding-top:12px;width:100%}
     .corner{position:fixed;width:28px;height:28px;z-index:3}
     .tl{top:8px;left:8px;border-top:2px solid var(--green-dark);border-left:2px solid var(--green-dark)}
     .tr{top:8px;right:8px;border-top:2px solid var(--green-dark);border-right:2px solid var(--green-dark)}
     .bl{bottom:8px;left:8px;border-bottom:2px solid var(--green-dark);border-left:2px solid var(--green-dark)}
     .br{bottom:8px;right:8px;border-bottom:2px solid var(--green-dark);border-right:2px solid var(--green-dark)}
+    .divider{width:100%;border:none;border-top:1px dashed #003300;margin:0}
   </style>
 </head>
 <body>
 <div class="corner tl"></div><div class="corner tr"></div>
 <div class="corner bl"></div><div class="corner br"></div>
 <div class="container">
+
   <header>
     <h1>La Aplicación de Javi</h1>
     <div class="subtitle">LLANES · ASTURIAS · ESPAÑA</div>
   </header>
-  <div class="data-strip">
-    <div class="data-strip-inner">SYS_OK &nbsp;|&nbsp; CONEXIÓN ACTIVA &nbsp;|&nbsp; ZONA: EUROPE/MADRID &nbsp;|&nbsp; LLANES — ASTURIAS &nbsp;|&nbsp; VER 2.0 &nbsp;|&nbsp; SYS_OK &nbsp;|&nbsp; CONEXIÓN ACTIVA &nbsp;|&nbsp; ZONA: EUROPE/MADRID &nbsp;|&nbsp; LLANES — ASTURIAS &nbsp;|&nbsp; VER 2.0</div>
+
+  <!-- ── PANTALLA LED ── -->
+  <div class="led-panel">
+    <div class="led-header">▶ AVISOS</div>
+    <div class="led-track-wrap">
+      <div class="led-track">
+        <span class="led-text" id="ledMsg">El DOMINGO 29 TENEMOS EL CAMBIO HORARIO, HAY QUE ADELANTAR LA HORA</span>
+        <span class="led-dots"><span class="led-dot"></span><span class="led-dot"></span><span class="led-dot"></span></span>
+        <span class="led-text">El DOMINGO 29 TENEMOS EL CAMBIO HORARIO, HAY QUE ADELANTAR LA HORA</span>
+        <span class="led-dots"><span class="led-dot"></span><span class="led-dot"></span><span class="led-dot"></span></span>
+      </div>
+    </div>
   </div>
+
+  <div class="data-strip">
+    <div class="data-strip-inner">SYS_OK &nbsp;|&nbsp; CONEXIÓN ACTIVA &nbsp;|&nbsp; ZONA: EUROPE/MADRID &nbsp;|&nbsp; LLANES — ASTURIAS &nbsp;|&nbsp; VER 3.0 &nbsp;|&nbsp; SYS_OK &nbsp;|&nbsp; CONEXIÓN ACTIVA &nbsp;|&nbsp; ZONA: EUROPE/MADRID &nbsp;|&nbsp; LLANES — ASTURIAS &nbsp;|&nbsp; VER 3.0</div>
+  </div>
+
+  <!-- ── RELOJ ── -->
   <div class="clock-panel">
     <div class="clock-label">// HORA LOCAL — ESPAÑA //</div>
     <div class="time"><span id="hh">00</span><span class="colon">:</span><span id="mm">00</span><span class="colon">:</span><span id="ss">00</span></div>
     <div class="date-display" id="dateDisplay">—</div>
     <div class="festivo-badge" id="festivoBadge">⚡ FESTIVO ⚡</div>
   </div>
+
+  <!-- ── BOTONES SUPERIORES ── -->
+  <div class="section-label">// GESTIÓN //</div>
+  <div class="buttons-grid">
+    <a class="btn" href="https://javi1899.github.io/limpiezapueblos/" target="_blank" rel="noopener">
+      <span class="btn-icon">🧹</span><span class="btn-text">LIMPIEZA<br>DE PUEBLOS</span>
+    </a>
+    <a class="btn" href="https://javi1899.github.io/vencimientositv/" target="_blank" rel="noopener">
+      <span class="btn-icon">🚗</span><span class="btn-text">VENCIMIENTOS<br>ITV</span>
+    </a>
+    <a class="btn" href="https://javi1899.github.io/descansos/" target="_blank" rel="noopener">
+      <span class="btn-icon">😴</span><span class="btn-text">DESCANSOS</span>
+    </a>
+    <a class="btn" href="https://javi1899.github.io/vacacionesllanes/" target="_blank" rel="noopener">
+      <span class="btn-icon">🏖️</span><span class="btn-text">VACACIONES</span>
+    </a>
+    <a class="btn" href="https://javi1899.github.io/muebles/" target="_blank" rel="noopener">
+      <span class="btn-icon">🛋️</span><span class="btn-text">RECOGIDA<br>DE MUEBLES</span>
+    </a>
+    <a class="btn" href="https://javi1899.github.io/planoslimpieza/" target="_blank" rel="noopener">
+      <span class="btn-icon">🗺️</span><span class="btn-text">PLANOS</span>
+    </a>
+  </div>
+
+  <!-- ── BOTONES INFERIORES ── -->
+  <div class="section-label">// INFORMACIÓN //</div>
   <div class="buttons-grid">
     <a class="btn" href="https://javi1899.github.io/gasoiloriente/" target="_blank" rel="noopener">
       <span class="btn-icon">⛽</span><span class="btn-text">PRECIO DEL<br>GASOIL</span>
@@ -84,10 +149,11 @@
       <span class="btn-icon">🌦️</span><span class="btn-text">EL TIEMPO<br>EN CÓRIGOS</span>
     </a>
   </div>
+
   <footer>&lt; SISTEMA OPERATIVO — LLANES &gt;<br><span id="footerDate"></span></footer>
 </div>
+
 <script>
-  // ── Festivos España + Asturias ──
   const FEST_FIJOS = {
     "01-01":"Año Nuevo","01-06":"Reyes Magos","05-01":"Día del Trabajo",
     "08-15":"Asunción de la Virgen","09-08":"Día de Asturias","10-12":"Fiesta Nacional",
